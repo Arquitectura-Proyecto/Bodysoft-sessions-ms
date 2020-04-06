@@ -4,45 +4,45 @@
 /*==============================================================*/
 
 
-drop table if exists SCHEDULES;
+drop table if exists schedule;
 
-drop table if exists SESSION_STATUS;
+drop table if exists session_status;
 
 /*==============================================================*/
 /* Table: STATUS                                                */
 /*==============================================================*/
-create table SESSION_STATUS
+create table session_status
 (
-   ID_STATUS                   smallint(4) not null,
-   NAME_STATUS                 text not null,
-   primary key (ID_STATUS)
+   id_status                   smallint(4) not null,
+   name_status                 text not null,
+   primary key (id_status)
 );
 
 /*==============================================================*/
 /* Table: SCHEDULES                                             */
 /*==============================================================*/
-create table SCHEDULES
+create table schedule
 (
-   ID_SCHEDULE          varchar(100) not null,
-   ID_STATUS            smallint(4) not null,
-   ID_COACH             varchar(100) not null,
-   DAY_SESSION          date not null,
-   INI_TIME             time not null,
-   END_TIME             time not null,
-   ID_USER              varchar(100),
-   primary key (ID_SCHEDULE)
+   id_schedule          bigint(100) not null,
+   id_status            smallint(4) not null,
+   id_coach             bigint(100) not null,
+   day_session          date not null,
+   ini_time             time not null,
+   end_time            time not null,
+   id_user              bigint(100),
+   primary key (id_schedule)
 );
 
 
 
-alter table SCHEDULES add constraint FK_SESSION_STATUS_SCHEDULE foreign key (ID_STATUS)
-      references SESSION_STATUS (ID_STATUS) on delete CASCADE on update CASCADE;
+alter table schedule add constraint session_status foreign key (id_status)
+      references session_status (id_status) on delete CASCADE on update CASCADE;
 
 /*===================================================================
  INSERTIONS
 */
-INSERT INTO SESSION_STATUS (ID_STATUS, NAME_STATUS) VALUES (1, 'Disponible');
-INSERT INTO SESSION_STATUS (ID_STATUS, NAME_STATUS) VALUES (2, 'Ocupado');
-INSERT INTO SESSION_STATUS (ID_STATUS, NAME_STATUS) VALUES (3, 'Cancelado');
-INSERT INTO SESSION_STATUS (ID_STATUS, NAME_STATUS) VALUES (4, 'Terminado');
+INSERT INTO session_status (id_status, name_status) VALUES (1, 'Disponible');
+INSERT INTO session_status (id_status, name_status) VALUES (2, 'Ocupado');
+INSERT INTO session_status (id_status, name_status) VALUES (3, 'Cancelado');
+INSERT INTO session_status (id_status, name_status) VALUES (4, 'Terminado');
 
