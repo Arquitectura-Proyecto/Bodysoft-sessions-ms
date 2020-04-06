@@ -13,7 +13,7 @@ drop table if exists session_status;
 /*==============================================================*/
 create table session_status
 (
-   id_status                   smallint(4) not null,
+   id_status                   smallint(4) not null AUTO_INCREMENT,
    name_status                 text not null,
    primary key (id_status)
 );
@@ -23,7 +23,7 @@ create table session_status
 /*==============================================================*/
 create table schedule
 (
-   id_schedule          bigint(100) not null,
+   id_schedule          bigint not null AUTO_INCREMENT,
    id_status            smallint(4) not null,
    id_coach             bigint(100) not null,
    day_session          date not null,
