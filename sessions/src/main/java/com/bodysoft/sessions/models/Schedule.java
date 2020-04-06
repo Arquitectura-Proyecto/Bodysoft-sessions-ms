@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
-@Table( name = "SCHEDULES", schema = "bs_sessions" )
+@Table( name = "schedule", schema = "bs_sessions" )
 public class Schedule implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -21,94 +21,91 @@ public class Schedule implements Serializable {
      */
 
     @Id
-    @SequenceGenerator( name = "USER_USERID_GENERATOR", sequenceName = "public.user_user_id_seq", allocationSize = 1 )
-    @GeneratedValue( generator = "USER_USERID_GENERATOR", strategy = GenerationType.SEQUENCE )
-    @Column( name = "ID_SCHEDULE" )
-    private String id_schedule;
+    @SequenceGenerator( name = "SCHEDULE_SCHEDULEID_GENERATOR", sequenceName = "bs_sessions.schedule_schedule_id_seq", allocationSize = 1 )
+    @GeneratedValue( generator = "SCHEDULE_SCHEDULEID_GENERATOR", strategy = GenerationType.SEQUENCE )
+    @Column( name = "id_schedule" )
+    private int id_schedule;
 
 
     @ManyToOne
-	@JoinColumn(name="ID_STATUS", insertable = false, updatable = false )
-    private Sessions_status status;
+	@JoinColumn(name="id_status", insertable = false, updatable = false )
+    private SessionStatus status;
 
     @NotNull
-    private String id_coach;
+    private int idCoach;
 
     @NotNull
-    private Date day_session;
+    private Date daySession;
 
     @NotNull
-    private Date ini_time;
+    private Date iniTime;
 
     @NotNull
-    private Date end_time;
+    private Date endTime;
 
     @NotNull
-    private String id_user;
+    private int idUser;
+
+    public int getId_schedule() {
+        return id_schedule;
+    }
+
+    public void setId_schedule(int id_schedule) {
+        this.id_schedule = id_schedule;
+    }
+
+    public SessionStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(SessionStatus status) {
+        this.status = status;
+    }
+
+    public int getIdCoach() {
+        return idCoach;
+    }
+
+    public void setIdCoach(int idCoach) {
+        this.idCoach = idCoach;
+    }
+
+    public Date getDaySession() {
+        return daySession;
+    }
+
+    public void setDaySession(Date daySession) {
+        this.daySession = daySession;
+    }
+
+    public Date getIniTime() {
+        return iniTime;
+    }
+
+    public void setIniTime(Date iniTime) {
+        this.iniTime = iniTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public int getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
+    }
 
     /**
      *  METODOS
      */
 
-    public String getId_schedule() {
-        return id_schedule;
-    }
-
-    public void setId_schedule(String id_schedule) {
-        this.id_schedule = id_schedule;
-    }
-
-
-    public String getId_coach() {
-        return id_coach;
-    }
-
-    public void setId_coach(String id_coach) {
-        this.id_coach = id_coach;
-    }
-
-    public Date getDay_session() {
-        return day_session;
-    }
-
-    public void setDay_session(Date day_session) {
-        this.day_session = day_session;
-    }
-
-    public Date getIni_time() {
-        return ini_time;
-    }
-
-    public void setIni_time(Date ini_time) {
-        this.ini_time = ini_time;
-    }
-
-    public Date getEnd_time() {
-        return end_time;
-    }
-
-    public void setEnd_time(Date end_time) {
-        this.end_time = end_time;
-    }
-
-    public String getId_user() {
-        return id_user;
-    }
-
-    public void setId_user(String id_user) {
-        this.id_user = id_user;
-    }
-
-    public Sessions_status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Sessions_status status) {
-        this.status = status;
-    }
-
     
-
-
 
 }
