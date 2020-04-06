@@ -14,7 +14,8 @@ public class StatusService {
     public StatusService( StatusRepository statusRepository ){
         this.statusRepository = statusRepository;
     }
-
-    
+    public SessionStatus findByIdStatus( Integer id ){
+        return statusRepository.findById(id).orElse(null);
+    };
 
 }

@@ -4,7 +4,8 @@ import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -15,36 +16,47 @@ public class Schedule implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    
 
     /**
      * ATRIBUTOS
      */
 
+
     @Id
-    @SequenceGenerator( name = "SCHEDULE_SCHEDULEID_GENERATOR", sequenceName = "bs_sessions.schedule_schedule_id_seq", allocationSize = 1 )
-    @GeneratedValue( generator = "SCHEDULE_SCHEDULEID_GENERATOR", strategy = GenerationType.SEQUENCE )
-    @Column( name = "id_schedule" )
+    @Column( name = "id_schedule" ,nullable = false, columnDefinition = "int default 1")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id_schedule;
 
 
-    @ManyToOne
-	@JoinColumn(name="id_status", insertable = false, updatable = false )
+    @ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="id_status")
     private SessionStatus status;
 
     @NotNull
-    private int idCoach;
+    @Column( name = "id_coach")
+    private Integer idCoach;
 
     @NotNull
-    private Date daySession;
+    @Column( name = "day_session")
+    private LocalDate daySession;
 
     @NotNull
-    private Date iniTime;
+    @Column( name = "ini_time")
+    private LocalTime iniTime;
 
     @NotNull
-    private Date endTime;
+    @Column( name = "end_time")
+    private LocalTime endTime;
 
-    @NotNull
-    private int idUser;
+    
+    @Column( name = "id_user")
+    private Integer idUser;
+
+     /**
+     *  METODOS
+     */
+
 
     public int getId_schedule() {
         return id_schedule;
@@ -70,29 +82,6 @@ public class Schedule implements Serializable {
         this.idCoach = idCoach;
     }
 
-    public Date getDaySession() {
-        return daySession;
-    }
-
-    public void setDaySession(Date daySession) {
-        this.daySession = daySession;
-    }
-
-    public Date getIniTime() {
-        return iniTime;
-    }
-
-    public void setIniTime(Date iniTime) {
-        this.iniTime = iniTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
 
     public int getIdUser() {
         return idUser;
@@ -102,10 +91,19 @@ public class Schedule implements Serializable {
         this.idUser = idUser;
     }
 
-    /**
-     *  METODOS
-     */
+    public void setDaySession(LocalDate daySession) {
+        this.daySession = daySession;
+    }
 
+    public void setIniTime(LocalTime iniTime) {
+        this.iniTime = iniTime;
+    }
+
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
+
+   
     
 
 }

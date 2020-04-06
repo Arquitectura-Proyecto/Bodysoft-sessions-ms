@@ -16,19 +16,17 @@ public class SessionStatus implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
-
     @Id
-    @SequenceGenerator( name = "STATUS_STATUSID_GENERATOR", sequenceName = "bs_sessions.session_status_session_status_id_seq", allocationSize = 1 )
-    @GeneratedValue( generator = "STATUS_STATUSID_GENERATOR", strategy = GenerationType.SEQUENCE )
-    @Column( name = "id_status" )
-    private int id;
+    @Column( name = "id_status", nullable = false, columnDefinition = "int default 1" )
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Integer id;
 
 
-    @NotNull
+    @Column( name = "name_status")
     private String nameStatus;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "status")
-    private Set<Schedule> schedule = new HashSet();
+    private Set<Schedule> schedule;
 
 
 
@@ -60,6 +58,11 @@ public class SessionStatus implements Serializable{
     public void setSchedule(Set<Schedule> schedule) {
         this.schedule = schedule;
     }
+
+	@Override
+	public String toString() {
+		return "SessionStatus [id=" + id + ", nameStatus=" + nameStatus + "]";
+	}
 
 
 
