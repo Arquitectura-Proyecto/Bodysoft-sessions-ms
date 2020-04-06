@@ -24,29 +24,34 @@ public class Schedule implements Serializable {
 
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column( name = "id_schedule" ,nullable = false, columnDefinition = "int default 1")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id_schedule;
 
 
-    @ManyToOne
-	@JoinColumn(name="id_status", insertable = false, updatable = false )
+    @ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="id_status")
     private SessionStatus status;
 
     @NotNull
-    private int idCoach;
+    @Column( name = "id_coach")
+    private Integer idCoach;
 
     @NotNull
+    @Column( name = "day_session")
     private LocalDate daySession;
 
     @NotNull
+    @Column( name = "ini_time")
     private LocalTime iniTime;
 
     @NotNull
+    @Column( name = "end_time")
     private LocalTime endTime;
 
-    @NotNull
-    private int idUser;
+    
+    @Column( name = "id_user")
+    private Integer idUser;
 
      /**
      *  METODOS

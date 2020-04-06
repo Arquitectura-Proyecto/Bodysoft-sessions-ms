@@ -2,6 +2,7 @@ package com.bodysoft.sessions.services;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 import com.bodysoft.sessions.POJO.RegisterSchedulePOJO;
 import com.bodysoft.sessions.models.Schedule;
@@ -19,6 +20,12 @@ public class ScheduleService {
     public ScheduleService( ScheduleRepository scheduleRepository ){
         this.scheduleRepository = scheduleRepository;
         this.Numberofdays = 7;
+    }
+
+
+
+    public List<Schedule> getAllbyIdCoach (Integer idCoach){
+        return scheduleRepository.findByIdCoach(idCoach);
     }
 
     /**
@@ -61,6 +68,7 @@ public class ScheduleService {
 
        if(today.isEqual(schedule.getDaySession())){
              TimeAvaible = time.isBefore(schedule.getIniTime());
+             System.out.println("hola");
        }
 
        boolean correctness = DayAvaible && TimeAvaible;

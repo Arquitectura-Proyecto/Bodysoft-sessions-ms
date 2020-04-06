@@ -16,18 +16,17 @@ public class SessionStatus implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
-
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column( name = "id_status", nullable = false, columnDefinition = "int default 1" )
-    private int id;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Integer id;
 
 
-    
+    @Column( name = "name_status")
     private String nameStatus;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "status")
-    private Set<Schedule> schedule = new HashSet();
+    private Set<Schedule> schedule;
 
 
 

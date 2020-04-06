@@ -10,12 +10,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+
+
 @CrossOrigin
 @RestController
 public class ScheduleController {
 
     private ScheduleService scheduleService;
     private StatusService statusService;
+
+    private final static Integer defaultIdstatus=1;
     
 
     public ScheduleController( ScheduleService scheduleService , StatusService statusService){
@@ -24,8 +30,12 @@ public class ScheduleController {
     }
 
     
-
-    @PostMapping( value = { "/registro/nuevo-horario/" } )
+    /**
+     * 
+     * @param schedulePOJO POJO with the body of the request
+     * @return HttpStatus if create or not
+     */
+    @PostMapping( value = { "/schedule/new-schedule/" } )
     public ResponseEntity registerNewSchedule(@RequestBody RegisterSchedulePOJO schedulePOJO ){
         
        
@@ -34,7 +44,7 @@ public class ScheduleController {
             return new ResponseEntity( HttpStatus.BAD_REQUEST );
         }
 
-        SessionStatus status = statusService.findByIdStatus(1);
+        SessionStatus status = statusService.findByIdStatus(defaultIdstatus);
         
 
         Schedule newSchedule = new Schedule( );
@@ -49,6 +59,11 @@ public class ScheduleController {
         scheduleService.save( newSchedule);
         
         return new ResponseEntity( HttpStatus.CREATED );
+    }
+
+    @GetMapping( value = { "/schedule/get-by-idCoach/{idCoach}" } )
+    public List<Schedule> getAllRoles(  @PathVariable Integer idCoach){
+        return scheduleService.getAllbyIdCoach(idCoach );
     }
 
 }

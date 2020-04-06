@@ -30,6 +30,22 @@ public class RegisterSchedulePOJO {
         return endTime;
     }
 
+    public void setIdCoach(int idCoach) {
+        this.idCoach = idCoach;
+    }
+
+    public void setDaySession(LocalDate daySession) {
+        this.daySession = daySession;
+    }
+
+    public void setIniTime(LocalTime iniTime) {
+        this.iniTime = iniTime;
+    }
+
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
+
 
     
     
