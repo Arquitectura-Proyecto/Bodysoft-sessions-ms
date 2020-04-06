@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 @Entity
@@ -28,7 +28,7 @@ public class Schedule implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id_schedule;
 
-
+    
     @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_status")
     private SessionStatus status;
@@ -82,7 +82,7 @@ public class Schedule implements Serializable {
         this.idCoach = idCoach;
     }
 
-
+    
     public int getIdUser() {
         return idUser;
     }
