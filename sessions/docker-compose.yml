@@ -1,4 +1,4 @@
-version: '2'
+version: '2.1'
 services:
   session-bs: # Entrada para definir el contenedor. Por defecto este nombre se usa como hostname
     container_name: session-bs
@@ -8,6 +8,11 @@ services:
       MYSQL_ROOT_PASSWORD: 123
       MYSQL_USER: admin
       MYSQL_PASSWORD: bs_sessions_2020i
+    healthcheck:
+      test: "mysqlcheck -u$$MYSQL_USER -p$$MYSQL_PASSWORD $$MYSQL_DATABASE"
+      interval: 20s
+      timeout: 5s
+      retries: 15
     ports:  # Mapeo de puertos
       - "3306:3306"
     networks:
@@ -33,7 +38,8 @@ services:
     networks:
       - example-network
     depends_on:
-      - session-bs
+        session-bs:
+            condition: service_healthy
 
 networks:
     example-network:
