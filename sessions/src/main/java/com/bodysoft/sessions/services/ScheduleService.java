@@ -17,15 +17,38 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final int Numberofdays;
 
+
+
     public ScheduleService( ScheduleRepository scheduleRepository ){
         this.scheduleRepository = scheduleRepository;
         this.Numberofdays = 7;
     }
 
-
-
+    /**
+     * 
+     * @param idCoach id of the coach
+     * @return List of all the schedule of one coach
+     */
     public List<Schedule> getAllbyIdCoach (Integer idCoach){
         return scheduleRepository.findByIdCoach(idCoach);
+    }
+
+    /**
+     * 
+     * @param idUser id of the user
+     * @return List of all the schedule of one user
+     */
+    public List<Schedule> getAllbyIdUser (Integer idUser){
+        return scheduleRepository.findByIdUser(idUser);
+    }
+
+    /**
+     * 
+     * @param idSchedule id of the shedule
+     * @return Object with the whole info of the schedule
+     */
+    public Schedule getbyid (Integer idSchedule){
+        return scheduleRepository.findById(idSchedule).orElse(null);
     }
 
     /**
@@ -68,7 +91,6 @@ public class ScheduleService {
 
        if(today.isEqual(schedule.getDaySession())){
              TimeAvaible = time.isBefore(schedule.getIniTime());
-             System.out.println("hola");
        }
 
        boolean correctness = DayAvaible && TimeAvaible;

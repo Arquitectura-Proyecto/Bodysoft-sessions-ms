@@ -22,7 +22,7 @@ public class ScheduleController {
     private StatusService statusService;
 
     private final static Integer defaultIdstatus=1;
-    
+    private final static Integer defaultIduser=0;
 
     public ScheduleController( ScheduleService scheduleService , StatusService statusService){
         this.scheduleService = scheduleService;
@@ -53,6 +53,7 @@ public class ScheduleController {
         newSchedule.setEndTime(schedulePOJO.getEndTime());
         newSchedule.setIniTime(schedulePOJO.getIniTime());
         newSchedule.setIdCoach(schedulePOJO.getIdCoach());
+        newSchedule.setIdUser(defaultIduser);
         newSchedule.setStatus(status);
 
         
@@ -61,10 +62,37 @@ public class ScheduleController {
         return new ResponseEntity( HttpStatus.CREATED );
     }
 
+    /**
+     * 
+     * @param idCoach id of the coach
+     * @return List of all the schedule of one coach
+     */
     @GetMapping( value = { "/schedule/get-by-idCoach/{idCoach}" } )
-    public List<Schedule> getAllRoles(  @PathVariable Integer idCoach){
+    public List<Schedule> getAllbyIdCoach(  @PathVariable Integer idCoach){
 
         return scheduleService.getAllbyIdCoach(idCoach);
+    }
+
+    /**
+     * 
+     * @param idUser id of the coach
+     * @return List of all the schedule of one user
+     */
+    @GetMapping( value = { "/schedule/get-by-idUser/{idUser}" } )
+    public List<Schedule> getAllbyIdUser(  @PathVariable Integer idUser){
+
+        return scheduleService.getAllbyIdUser(idUser);
+    }
+
+    /**
+     * 
+     * @param idSchedule id of the Schedule
+     * @return Json with all the info of the schedule
+     */
+    @GetMapping( value = { "/schedule/get-by-idSchedule/{idSchedule}" } )
+    public Schedule getbyIdSchedule(  @PathVariable Integer idSchedule){
+
+        return scheduleService.getbyid(idSchedule);
     }
 
 }
