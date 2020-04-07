@@ -95,4 +95,10 @@ public class ScheduleController {
         return scheduleService.getbyid(idSchedule);
     }
 
+    /** QUITAR */
+    @RequestMapping("/")
+    public String home() {
+        return "Hello Spring Boot with Docker";
+    }
+
 }
