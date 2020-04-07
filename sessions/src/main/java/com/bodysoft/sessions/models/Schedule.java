@@ -7,7 +7,11 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;;
 
 
 @Entity
@@ -16,7 +20,7 @@ public class Schedule implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    
+    public Schedule (){};
 
     /**
      * ATRIBUTOS
@@ -29,29 +33,35 @@ public class Schedule implements Serializable {
     private int id_schedule;
 
     
-    @ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_status")
-    private SessionStatus status;
-
     @NotNull
     @Column( name = "id_coach")
     private Integer idCoach;
 
     @NotNull
+    @JsonFormat(pattern="yyyy-MM-dd")
     @Column( name = "day_session")
     private LocalDate daySession;
 
     @NotNull
+    @JsonFormat(pattern="HH:mm:ss")
     @Column( name = "ini_time")
     private LocalTime iniTime;
 
     @NotNull
+    @JsonFormat(pattern="HH:mm:ss")
     @Column( name = "end_time")
     private LocalTime endTime;
 
+    @ManyToOne
+	@JoinColumn(name="id_status")
+    private SessionStatus status;
+
     
+
     @Column( name = "id_user")
     private Integer idUser;
+
+
 
      /**
      *  METODOS

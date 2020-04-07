@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 
 
 import java.util.List;
+import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -14,14 +15,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table( name = "session_status", schema = "bs_sessions" )
 public class SessionStatus implements Serializable{
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;    
 
+    public SessionStatus( ){
+             
+    }
+    /*
     private SessionStatus( Integer id, String nameStatus ){
         this.id = id;
         this.nameStatus = nameStatus;
         this.schedule = new ArrayList<>( );
     }
-
+*/
     @Id
     @Column( name = "id_status", nullable = false, columnDefinition = "int default 1" )
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -33,7 +38,7 @@ public class SessionStatus implements Serializable{
 
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "status")
+    @OneToMany(mappedBy = "status")
     private List<Schedule> schedule;
 
 
