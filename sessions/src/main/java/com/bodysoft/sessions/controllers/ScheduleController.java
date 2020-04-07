@@ -63,7 +63,8 @@ public class ScheduleController {
 
     @GetMapping( value = { "/schedule/get-by-idCoach/{idCoach}" } )
     public List<Schedule> getAllRoles(  @PathVariable Integer idCoach){
-        return scheduleService.getAllbyIdCoach(idCoach );
+
+        return scheduleService.getAllbyIdCoach(idCoach);
     }
 
 }
