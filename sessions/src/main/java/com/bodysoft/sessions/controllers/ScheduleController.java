@@ -76,6 +76,19 @@ public class ScheduleController {
     /**
      * 
      * @param idUser id of the coach
+     * @return List of the current schedules of one coach
+     */
+    @GetMapping(value = {"/schedule/get-by-idCoach/Current/{idCoach}"})
+    public List<Schedule> getAllCoachCurrent(@PathVariable Integer idCoach){
+        List <Schedule> schedules = scheduleService.getAllbyIdCoach(idCoach);
+        SessionStatus status = statusService.findByIdStatus(2);
+
+        return statusService.getAllbystatus(status,schedules);
+    }
+
+    /**
+     * 
+     * @param idUser id of the coach
      * @return List of all the schedule of one user
      */
     @GetMapping( value = { "/schedule/get-by-idUser/{idUser}" } )
@@ -83,6 +96,20 @@ public class ScheduleController {
 
         return scheduleService.getAllbyIdUser(idUser);
     }
+
+    /**
+     * 
+     * @param idUser id of the coach
+     * @return List of the current schedules of one user
+     */
+    @GetMapping(value = {"/schedule/get-by-idUser/Current/{idUser}"})
+    public List<Schedule> getAllUserCurrent(@PathVariable Integer idUser){
+        List <Schedule> schedules = scheduleService.getAllbyIdUser(idUser);
+        SessionStatus status = statusService.findByIdStatus(2);
+
+        return statusService.getAllbystatus(status,schedules);
+    }
+
 
     /**
      * 
@@ -94,6 +121,8 @@ public class ScheduleController {
 
         return scheduleService.getbyid(idSchedule);
     }
+
+    
 
     /** QUITAR */
     @RequestMapping("/")
