@@ -24,6 +24,10 @@ public class ScheduleController {
     private final static Integer defaultIdstatus=1;
     private final static Integer defaultIduser=0;
 
+    private final static Integer statedone = 4;
+    private final static Integer statecancelled = 3;
+    private final static Integer statecurrent = 2;
+
     public ScheduleController( ScheduleService scheduleService , StatusService statusService){
         this.scheduleService = scheduleService;
         this.statusService =statusService;
@@ -69,7 +73,12 @@ public class ScheduleController {
      */
     @GetMapping( value = { "/schedule/get-by-idCoach/{idCoach}" } )
     public List<Schedule> getAllbyIdCoach(  @PathVariable Integer idCoach){
-
+        List <Schedule> schedules = scheduleService.getAllbyIdCoach(idCoach);
+        
+        List<List <Schedule>> schedulesupdate = scheduleService.ispast(schedules);
+        SessionStatus done = statusService.findByIdStatus(statedone);
+        scheduleService.updateandremoveAll(schedulesupdate.get(1), done);
+        
         return scheduleService.getAllbyIdCoach(idCoach);
     }
 
@@ -81,9 +90,13 @@ public class ScheduleController {
     @GetMapping(value = {"/schedule/get-by-idCoach/Current/{idCoach}"})
     public List<Schedule> getAllCoachCurrent(@PathVariable Integer idCoach){
         List <Schedule> schedules = scheduleService.getAllbyIdCoach(idCoach);
-        SessionStatus status = statusService.findByIdStatus(2);
+        
+        List<List <Schedule>> schedulesupdate = scheduleService.ispast(schedules);
+        SessionStatus done = statusService.findByIdStatus(statedone);
+        scheduleService.updateandremoveAll(schedulesupdate.get(1), done);
+        SessionStatus current = statusService.findByIdStatus(statecurrent);
 
-        return statusService.getAllbystatus(status,schedules);
+        return statusService.getAllbystatus(current,schedulesupdate.get(0));
     }
 
     /**
@@ -93,7 +106,12 @@ public class ScheduleController {
      */
     @GetMapping( value = { "/schedule/get-by-idUser/{idUser}" } )
     public List<Schedule> getAllbyIdUser(  @PathVariable Integer idUser){
-
+        List <Schedule> schedules = scheduleService.getAllbyIdUser(idUser);
+        
+        List<List <Schedule>> schedulesupdate = scheduleService.ispast(schedules);
+        SessionStatus done = statusService.findByIdStatus(statedone);
+        scheduleService.updateandremoveAll(schedulesupdate.get(1), done);
+        
         return scheduleService.getAllbyIdUser(idUser);
     }
 
@@ -105,9 +123,13 @@ public class ScheduleController {
     @GetMapping(value = {"/schedule/get-by-idUser/Current/{idUser}"})
     public List<Schedule> getAllUserCurrent(@PathVariable Integer idUser){
         List <Schedule> schedules = scheduleService.getAllbyIdUser(idUser);
-        SessionStatus status = statusService.findByIdStatus(2);
+        
+        List<List <Schedule>> schedulesupdate = scheduleService.ispast(schedules);
+        SessionStatus done = statusService.findByIdStatus(statedone);
+        scheduleService.updateandremoveAll(schedulesupdate.get(1), done);
+        SessionStatus current = statusService.findByIdStatus(statecurrent);
 
-        return statusService.getAllbystatus(status,schedules);
+        return statusService.getAllbystatus(current,schedules);
     }
 
 

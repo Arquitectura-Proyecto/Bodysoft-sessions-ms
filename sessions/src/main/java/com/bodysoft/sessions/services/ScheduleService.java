@@ -18,13 +18,19 @@ public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
     private final int Numberofdays;
-
+    private final Integer stateDone;
+    private final Integer statecancelled;
 
 
     public ScheduleService( ScheduleRepository scheduleRepository ){
         this.scheduleRepository = scheduleRepository;
         this.Numberofdays = 7;
+        this.statecancelled=3;
+        this.stateDone=4;
     }
+
+
+    /* GET BY __ */
 
     /**
      * 
@@ -54,6 +60,9 @@ public class ScheduleService {
         return scheduleRepository.findById(idSchedule).orElse(null);
     }
 
+
+    /* SAVE */
+
     /**
      * 
      * @param schedule Register POJO
@@ -62,6 +71,7 @@ public class ScheduleService {
         scheduleRepository.save(schedule);
     }
 
+    /* CONFIRMATION */
     /**
      * 
      * @param schedule Register POJO
@@ -84,10 +94,7 @@ public class ScheduleService {
     public boolean isDateAvailable (RegisterSchedulePOJO schedule){
        LocalDate today = LocalDate.now();
        LocalTime time = LocalTime.now();
-
-       
-
-
+  
        boolean DayAvaible = today.plusDays(this.Numberofdays).isAfter(schedule.getDaySession()) && today.isBefore(schedule.getDaySession());
       
        boolean TimeAvaible = true;
@@ -109,5 +116,76 @@ public class ScheduleService {
     public boolean IsTimeCorrect (RegisterSchedulePOJO schedule){
         boolean correctness = schedule.getIniTime().isBefore(schedule.getEndTime());
         return correctness;
+    }
+
+
+    /* UPDATE */
+
+    /**
+     * 
+     * @param schedules List of schedule to be updated
+     * @param done New State
+     */
+    public void updateandremoveAll (List<Schedule> schedules,SessionStatus done ){
+
+
+        for (Schedule schedule : schedules) {
+            
+            if(schedule.getIdUser()==0){
+                scheduleRepository.deleteById(schedule.getId_schedule());
+            }
+            else{
+                schedule.setStatus(done);
+                scheduleRepository.save(schedule);
+            }
+                        
+        }
+
+    }
+    /**
+     * 
+     * @param schedules List of schedule to be filtered
+     * @return List of current schedules and the list of schedule to be updated
+     */
+    public List<List<Schedule>> ispast (List<Schedule> schedules){
+        LocalDate today = LocalDate.now();
+        LocalTime time = LocalTime.now();
+
+        List<Schedule> past = new ArrayList();
+        List<Schedule> current = new ArrayList();
+
+        for (Schedule schedule : schedules) {
+            if(today.isEqual(schedule.getDaySession())){
+                if(time.isAfter(schedule.getEndTime())){
+                    if (schedule.getStatus().getId()!=this.statecancelled ||schedule.getStatus().getId()!=this.stateDone){
+                        past.add(schedule);
+                    }
+                
+                }
+            }
+            else if (today.isAfter(schedule.getDaySession())){
+                if (schedule.getStatus().getId()!=this.statecancelled ||schedule.getStatus().getId()!=this.stateDone){
+                    past.add(schedule);
+                }
+            }
+            else{
+                current.add(schedule);
+            }
+        }
+            List<List<Schedule>> finalList = new ArrayList();
+            finalList.add(current);
+            finalList.add(past);
+        return finalList;
+
+    }
+
+    /**
+     * 
+     * @param schedule Schedulee that is going to be updated
+     * @param status New status
+     */
+    public void updateStatus (Schedule schedule, SessionStatus status){
+        schedule.setStatus(status);
+        scheduleRepository.save(schedule);
     }
 }
