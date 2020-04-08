@@ -2,10 +2,12 @@ package com.bodysoft.sessions.services;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.bodysoft.sessions.POJO.RegisterSchedulePOJO;
 import com.bodysoft.sessions.models.Schedule;
+import com.bodysoft.sessions.models.SessionStatus;
 import com.bodysoft.sessions.repositories.ScheduleRepository;
 
 import org.springframework.stereotype.Service;
@@ -41,6 +43,7 @@ public class ScheduleService {
     public List<Schedule> getAllbyIdUser (Integer idUser){
         return scheduleRepository.findByIdUser(idUser);
     }
+
 
     /**
      * 
