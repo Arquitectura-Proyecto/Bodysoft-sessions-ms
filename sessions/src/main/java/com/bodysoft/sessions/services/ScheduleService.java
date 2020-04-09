@@ -94,13 +94,13 @@ public class ScheduleService {
     public boolean isDateAvailable (RegisterSchedulePOJO schedule){
        LocalDate today = LocalDate.now();
        LocalTime time = LocalTime.now();
-  
        boolean DayAvaible = today.plusDays(this.Numberofdays).isAfter(schedule.getDaySession()) && today.isBefore(schedule.getDaySession());
-      
+       ;
        boolean TimeAvaible = true;
 
        if(today.isEqual(schedule.getDaySession())){
-             TimeAvaible = time.isBefore(schedule.getIniTime());
+            DayAvaible = true;
+            TimeAvaible = time.isBefore(schedule.getIniTime());
        }
 
        boolean correctness = DayAvaible && TimeAvaible;
@@ -157,14 +157,14 @@ public class ScheduleService {
         for (Schedule schedule : schedules) {
             if(today.isEqual(schedule.getDaySession())){
                 if(time.isAfter(schedule.getEndTime())){
-                    if (schedule.getStatus().getId()!=this.statecancelled ||schedule.getStatus().getId()!=this.stateDone){
+                    if (schedule.getStatus().getId()!=this.statecancelled && schedule.getStatus().getId()!=this.stateDone){
                         past.add(schedule);
                     }
                 
                 }
             }
             else if (today.isAfter(schedule.getDaySession())){
-                if (schedule.getStatus().getId()!=this.statecancelled ||schedule.getStatus().getId()!=this.stateDone){
+                if (schedule.getStatus().getId()!=this.statecancelled && schedule.getStatus().getId()!=this.stateDone){
                     past.add(schedule);
                 }
             }

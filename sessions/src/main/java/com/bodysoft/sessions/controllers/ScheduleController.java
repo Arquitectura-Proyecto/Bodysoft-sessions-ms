@@ -27,6 +27,7 @@ public class ScheduleController {
     private final static Integer statedone = 4;
     private final static Integer statecancelled = 3;
     private final static Integer statecurrent = 2;
+    private final static Integer stateavaible = 1;
 
     public ScheduleController( ScheduleService scheduleService , StatusService statusService){
         this.scheduleService = scheduleService;
@@ -39,7 +40,7 @@ public class ScheduleController {
      * @param schedulePOJO POJO with the body of the request
      * @return HttpStatus if create or not
      */
-    @PostMapping( value = { "/schedule/new-schedule/" } )
+    @PostMapping( value = { "/schedule/new-schedule" } )
     public ResponseEntity registerNewSchedule(@RequestBody RegisterSchedulePOJO schedulePOJO ){
         
        
@@ -95,8 +96,11 @@ public class ScheduleController {
         SessionStatus done = statusService.findByIdStatus(statedone);
         scheduleService.updateandremoveAll(schedulesupdate.get(1), done);
         SessionStatus current = statusService.findByIdStatus(statecurrent);
+        SessionStatus avaible = statusService.findByIdStatus(stateavaible);
 
-        return statusService.getAllbystatus(current,schedulesupdate.get(0));
+        List<Schedule> list = statusService.getAllbystatus(current,schedulesupdate.get(0));
+        list.addAll(statusService.getAllbystatus(avaible,schedulesupdate.get(0)));
+        return list;
     }
 
     /**
@@ -111,7 +115,7 @@ public class ScheduleController {
         List<List <Schedule>> schedulesupdate = scheduleService.ispast(schedules);
         SessionStatus done = statusService.findByIdStatus(statedone);
         scheduleService.updateandremoveAll(schedulesupdate.get(1), done);
-        
+
         return scheduleService.getAllbyIdUser(idUser);
     }
 
