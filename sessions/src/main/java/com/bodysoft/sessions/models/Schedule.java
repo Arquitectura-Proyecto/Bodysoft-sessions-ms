@@ -113,6 +113,22 @@ public class Schedule implements Serializable {
         this.endTime = endTime;
     }
 
+    public LocalDate getDaySession() {
+        return daySession;
+    }
+
+    public LocalTime getIniTime() {
+        return iniTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
+    }
+
+    public void setIdUser(Integer idUser) {
+        this.idUser = idUser;
+    }
+
    
     
 

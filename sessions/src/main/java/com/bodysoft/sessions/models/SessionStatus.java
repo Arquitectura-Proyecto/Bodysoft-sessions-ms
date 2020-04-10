@@ -72,6 +72,11 @@ public class SessionStatus implements Serializable{
 		this.schedule = schedule;
 	}
 
+    @Override
+    public String toString() {
+        return "SessionStatus [id=" + id + ", nameStatus=" + nameStatus + "]";
+    }
+
     
 
     

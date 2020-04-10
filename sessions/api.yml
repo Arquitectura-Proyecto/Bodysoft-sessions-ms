@@ -1,0 +1,320 @@
+#Test with: http://editor.swagger.io/
+
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Microservice for sessions manage
+  description: Java Srpring boot + MySQL 
+  license:
+    name: Software Architecture, 2020-I
+host: localhost:4000 
+basePath: /schedule
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /schedule/create:
+    post:
+      summary: Creates a new schedule
+      operationId: registerNewSchedule
+      parameters:
+        - name: schedule
+          in: body
+          required: true
+          description: RegisterSchedulePOJO Object
+          schema:
+            $ref: '#/definitions/ScheduleInput'
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+  /schedule/delete:  
+    delete:
+      summary: Deletes an schedule 
+      operationId: deleteSchedule
+      parameters:
+        - name: user
+          in: body
+          required: true
+          description: ChangeStatePOJO Object
+          schema:
+            $ref: '#/definitions/ChageState'
+      responses:
+        '200':
+          description: Ok
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '406':
+            description: Not Acceptable (Invalid Params)
+            schema:
+              $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+  /get-by-idCoach/{idCoach}:
+    get:
+      summary: Returns the list of schedule of the coach with the given id
+      operationId: getAllbyIdCoach
+      parameters:
+        - name: idCoach
+          in: path
+          description: The id of the coach 
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/Schedule'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+  /get-by-idCoach/Current/{idCoach}:
+    get:
+      summary: Returns the list of current schedule of the coach with the given id
+      operationId: getAllCoachCurrent
+      parameters:
+        - name: idCoach
+          in: path
+          description: The id of the coach 
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/Schedule'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+  /get-by-idUser/{idUser}: 
+    get:
+      summary: Returns the list of schedule of the user with the given id
+      operationId: getAllbyIdUser
+      parameters:
+        - name: idUser
+          in: path
+          description: The id of the user 
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/Schedule'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  /get-by-idUser/Current/{idUser}:
+    get:
+      summary: Returns the list of current schedule of the user with the given id
+      operationId: getAllUserCurrent
+      parameters:
+        - name: idUser
+          in: path
+          description: The id of the user 
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/Schedule'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  
+  /set-a-date:
+    put:
+      summary: Set a schedule
+      operationId: setAdate
+      parameters:
+        - name: user
+          in: body
+          required: true
+          description: ChangeStatePOJO Object
+          schema:
+            $ref: '#/definitions/ChageState'
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/Schedule'
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '406':
+            description: Not Acceptable (Invalid Params)
+            schema:
+              $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+  /cancel/user:
+    put:
+      summary: Cancel a schedule by a User
+      operationId: calcelUser
+      parameters:
+        - name: user
+          in: body
+          required: true
+          description: ChangeStatePOJO Object
+          schema:
+            $ref: '#/definitions/ChageState'
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/Schedule'
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '406':
+            description: Not Acceptable (Invalid Params)
+            schema:
+              $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+  /cancel/coach:
+    put:
+      summary: Cancel a schedule by a coach
+      operationId: calcelCoach
+      parameters:
+        - name: user
+          in: body
+          required: true
+          description: ChangeStatePOJO Object
+          schema:
+            $ref: '#/definitions/ChageState'
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/Schedule'
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '406':
+            description: Not Acceptable (Invalid Params)
+            schema:
+              $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+definitions:
+
+  ChageState:
+    type: object
+    properties:
+      person:
+        type: integer
+      schedule:
+        type: integer
+
+  # Users
+  Schedule:
+    type: object
+    properties:
+      
+      id_schedule:
+        type: integer
+      idCoach:
+        type: integer
+      daySession:
+        type: string #yyyy-mm-dd
+      iniTime:
+        type: string #hh:mm:ss
+      endTime:
+        type: string #hh:mm:ss
+      status:
+        type: object
+      idUser:
+        type: integer
+
+  Status:
+    type: object
+    properties:
+      id:
+        type: integer
+      nameStatus:
+        type: string
+
+  ScheduleInput:
+    type: object
+    properties:
+      idCoach:
+        type: integer
+      daySession:
+        type: string #yyyy-mm-dd
+      iniTime:
+        type: string #hh:mm:ss 
+      endTime:
+        type: string #hh:mm:ss
+
+
+# Errors
+  ErrorModel:
+    type: object
+    required:
+      - message
+      - code
+    properties:
+      message:
+        type: string
+      code:
+        type: number
+      description:
+        type: object

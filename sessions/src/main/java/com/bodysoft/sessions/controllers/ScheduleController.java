@@ -1,5 +1,6 @@
 package com.bodysoft.sessions.controllers;
 
+import com.bodysoft.sessions.POJO.ChangeStatePOJO;
 import com.bodysoft.sessions.POJO.RegisterSchedulePOJO;
 import com.bodysoft.sessions.models.Schedule;
 import com.bodysoft.sessions.models.SessionStatus;
@@ -10,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 
 
@@ -24,6 +24,7 @@ public class ScheduleController {
     private final static Integer defaultIdstatus=1;
     private final static Integer defaultIduser=0;
 
+
     public ScheduleController( ScheduleService scheduleService , StatusService statusService){
         this.scheduleService = scheduleService;
         this.statusService =statusService;
@@ -35,7 +36,7 @@ public class ScheduleController {
      * @param schedulePOJO POJO with the body of the request
      * @return HttpStatus if create or not
      */
-    @PostMapping( value = { "/schedule/new-schedule/" } )
+    @PostMapping( value = { "/schedule/schedule/create" } )
     public ResponseEntity registerNewSchedule(@RequestBody RegisterSchedulePOJO schedulePOJO ){
         
        
@@ -61,68 +62,34 @@ public class ScheduleController {
         
         return new ResponseEntity( HttpStatus.CREATED );
     }
-
-    /**
+     /**
      * 
-     * @param idCoach id of the coach
-     * @return List of all the schedule of one coach
+     * @param pojo POJO with the information of the id coach and the id schedule to be cancelled
+     * @return HTTP status
      */
-    @GetMapping( value = { "/schedule/get-by-idCoach/{idCoach}" } )
-    public List<Schedule> getAllbyIdCoach(  @PathVariable Integer idCoach){
+    @DeleteMapping( value = {"/schedule/schedule/delete"})
+    public ResponseEntity deleteSchedule (@RequestBody ChangeStatePOJO pojo){
 
-        return scheduleService.getAllbyIdCoach(idCoach);
+        boolean isrigthid = scheduleService.isRightId(pojo.getSchedule());
+        if(!isrigthid){
+            return new ResponseEntity( HttpStatus.NOT_FOUND );
+        }
+        Schedule schedule = scheduleService.getbyid(pojo.getSchedule());
+
+        boolean isrigthCoach = scheduleService.isRightCoach(schedule, pojo.getPerson());
+        if(!isrigthCoach){
+            return new ResponseEntity( HttpStatus.NOT_ACCEPTABLE );
+        }
+        boolean isRightUser = scheduleService.isRightUser(schedule, 0);
+        if(!isRightUser){
+            return new ResponseEntity( HttpStatus.NOT_ACCEPTABLE );
+        }
+
+        scheduleService.delete(schedule);
+
+        return new ResponseEntity( HttpStatus.OK );
+
     }
-
-    /**
-     * 
-     * @param idUser id of the coach
-     * @return List of the current schedules of one coach
-     */
-    @GetMapping(value = {"/schedule/get-by-idCoach/Current/{idCoach}"})
-    public List<Schedule> getAllCoachCurrent(@PathVariable Integer idCoach){
-        List <Schedule> schedules = scheduleService.getAllbyIdCoach(idCoach);
-        SessionStatus status = statusService.findByIdStatus(2);
-
-        return statusService.getAllbystatus(status,schedules);
-    }
-
-    /**
-     * 
-     * @param idUser id of the coach
-     * @return List of all the schedule of one user
-     */
-    @GetMapping( value = { "/schedule/get-by-idUser/{idUser}" } )
-    public List<Schedule> getAllbyIdUser(  @PathVariable Integer idUser){
-
-        return scheduleService.getAllbyIdUser(idUser);
-    }
-
-    /**
-     * 
-     * @param idUser id of the coach
-     * @return List of the current schedules of one user
-     */
-    @GetMapping(value = {"/schedule/get-by-idUser/Current/{idUser}"})
-    public List<Schedule> getAllUserCurrent(@PathVariable Integer idUser){
-        List <Schedule> schedules = scheduleService.getAllbyIdUser(idUser);
-        SessionStatus status = statusService.findByIdStatus(2);
-
-        return statusService.getAllbystatus(status,schedules);
-    }
-
-
-    /**
-     * 
-     * @param idSchedule id of the Schedule
-     * @return Json with all the info of the schedule
-     */
-    @GetMapping( value = { "/schedule/get-by-idSchedule/{idSchedule}" } )
-    public Schedule getbyIdSchedule(  @PathVariable Integer idSchedule){
-
-        return scheduleService.getbyid(idSchedule);
-    }
-
-    
 
     /** QUITAR */
     @RequestMapping("/")
