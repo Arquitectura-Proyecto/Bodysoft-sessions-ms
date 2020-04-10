@@ -20,6 +20,7 @@ public class ScheduleService {
     private final int Numberofdays;
     private final Integer stateDone;
     private final Integer statecancelled;
+    private final Integer stateavaible;
 
 
     public ScheduleService( ScheduleRepository scheduleRepository ){
@@ -27,6 +28,7 @@ public class ScheduleService {
         this.Numberofdays = 7;
         this.statecancelled=3;
         this.stateDone=4;
+        this.stateavaible=1;
     }
 
 
@@ -61,7 +63,7 @@ public class ScheduleService {
     }
 
 
-    /* SAVE */
+    /* SAVE and UPDATE */
 
     /**
      * 
@@ -72,6 +74,58 @@ public class ScheduleService {
     }
 
     /* CONFIRMATION */
+
+
+    public boolean isRightId(Integer id){
+        boolean correctness = scheduleRepository.existsById(id);
+        return correctness;
+    }
+
+    public boolean isNotTaken(Schedule schedule){
+        boolean correctness = schedule.getStatus().getId()==this.stateavaible;
+        return correctness;
+    }
+
+
+    /**
+     * 
+     * @param schedule the schudule to be confirmed
+     * @param idUser the id useer to confirm
+     * @return If the id user is the same as the one register in the schedule
+     */
+    public boolean isRightUser(Schedule schedule, Integer idUser){
+        boolean correctness = schedule.getIdUser()==idUser;
+        return correctness;
+    }
+    
+    public boolean isPosibleCancell(Schedule schedule, Integer posibleTime){
+        LocalDate today = LocalDate.now();
+        LocalTime time = LocalTime.now();
+
+        boolean correctness = false ;
+        if(schedule.getDaySession().isBefore(today)){
+            correctness = true;
+        }
+        else if(schedule.getDaySession().isEqual(today)){
+            LocalTime timeCancel = schedule.getIniTime().plusMinutes(posibleTime);
+            if(timeCancel.isBefore(time)){
+                correctness = true;
+            }
+        }
+        return correctness;
+    }
+
+    /**
+     * 
+     * @param schedule the schudule to be confirmed
+     * @param idUser the id coach to confirm
+     * @return If the id coach is the same as the one register in the schedule
+     */
+    public boolean isRightCoach(Schedule schedule, Integer idCoach){
+        boolean correctness = schedule.getIdCoach()==idCoach;
+        return correctness;
+    }
+
     /**
      * 
      * @param schedule Register POJO
@@ -188,4 +242,12 @@ public class ScheduleService {
         schedule.setStatus(status);
         scheduleRepository.save(schedule);
     }
+
+    /**DELETE */
+
+    public void delete (Schedule schedule){
+        scheduleRepository.delete(schedule);
+    }
+
+
 }
