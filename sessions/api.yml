@@ -7,7 +7,7 @@ info:
   description: Java Srpring boot + MySQL
   license:
     name: Software Architecture, 2020-I
-host: localhost:4000
+host: host:4000
 basePath: /schedule
 schemes:
   - http
@@ -274,22 +274,23 @@ definitions:
       idCoach:
         type: integer
       daySession:
-        type: yyyy-mm-dd
+        type: string #yyyy-mm-dd
       iniTime:
-        type: hh:mm:ss
+        type: string #hh:mm:ss
       endTime:
-        type: hh:mm:ss
+        type: string #hh:mm:ss
       status:
-        schema:
-            $ref: '#/definitions/Status'
+        type: object
       idUser:
         type: integer
 
   Status:
-    id:
-      type: integer
-    nameStatus:
-      type: string
+    type: object
+    properties:
+      id:
+        type: integer
+      nameStatus:
+        type: string
 
   ScheduleInput:
     type: object
@@ -297,24 +298,12 @@ definitions:
       idCoach:
         type: integer
       daySession:
-        type: yyyy-mm-dd
+        type: string #yyyy-mm-dd
       iniTime:
-        type: hh:mm:ss
+        type: string #hh:mm:ss 
       endTime:
-        type: hh:mm:ss
+        type: string #hh:mm:ss
 
-  UsersList:
-    type: object
-    required:
-      - total
-      - list
-    properties:
-      total:
-        type: number
-      list:
-        type: array
-        items:
-          $ref: '#/definitions/User'
 
 # Errors
   ErrorModel:
