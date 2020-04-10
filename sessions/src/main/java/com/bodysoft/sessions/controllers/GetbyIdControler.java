@@ -39,14 +39,20 @@ public class GetbyIdControler {
      * @return List of all the schedule of one coach
      */
     @GetMapping( value = { "/schedule/get-by-idCoach/{idCoach}" } )
-    public List<Schedule> getAllbyIdCoach(  @PathVariable Integer idCoach){
+    public ResponseEntity<List<Schedule>> getAllbyIdCoach(  @PathVariable Integer idCoach){
         List <Schedule> schedules = scheduleService.getAllbyIdCoach(idCoach);
         
         List<List <Schedule>> schedulesupdate = scheduleService.ispast(schedules);
         SessionStatus done = statusService.findByIdStatus(statedone);
         scheduleService.updateandremoveAll(schedulesupdate.get(1), done);
+
+        List<Schedule> response = scheduleService.getAllbyIdCoach(idCoach);
+        if(response.isEmpty()){
+            return new ResponseEntity(response,HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity(response,HttpStatus.OK);
         
-        return scheduleService.getAllbyIdCoach(idCoach);
     }
 
     /**
@@ -55,7 +61,7 @@ public class GetbyIdControler {
      * @return List of the current schedules of one coach
      */
     @GetMapping(value = {"/schedule/get-by-idCoach/Current/{idCoach}"})
-    public List<Schedule> getAllCoachCurrent(@PathVariable Integer idCoach){
+    public ResponseEntity<List<Schedule>> getAllCoachCurrent(@PathVariable Integer idCoach){
         List <Schedule> schedules = scheduleService.getAllbyIdCoach(idCoach);
         
         List<List <Schedule>> schedulesupdate = scheduleService.ispast(schedules);
@@ -71,7 +77,12 @@ public class GetbyIdControler {
         union.addAll(statusService.getAllbystatus(avaible,sList));
         union.addAll(statusService.getAllbystatus(current,sList));
 
-        return union;
+        if(union.isEmpty()){
+            return new ResponseEntity(union,HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity(union,HttpStatus.OK);
+
     }
 
     /**
@@ -80,14 +91,21 @@ public class GetbyIdControler {
      * @return List of all the schedule of one user
      */
     @GetMapping( value = { "/schedule/get-by-idUser/{idUser}" } )
-    public List<Schedule> getAllbyIdUser(  @PathVariable Integer idUser){
+    public ResponseEntity<List<Schedule>> getAllbyIdUser(  @PathVariable Integer idUser){
         List <Schedule> schedules = scheduleService.getAllbyIdUser(idUser);
         
         List<List <Schedule>> schedulesupdate = scheduleService.ispast(schedules);
         SessionStatus done = statusService.findByIdStatus(statedone);
         scheduleService.updateandremoveAll(schedulesupdate.get(1), done);
 
-        return scheduleService.getAllbyIdUser(idUser);
+        List<Schedule> response = scheduleService.getAllbyIdUser(idUser);
+
+        if(response.isEmpty()){
+            return new ResponseEntity(response,HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity(response,HttpStatus.OK);
+
     }
 
     /**
@@ -96,7 +114,7 @@ public class GetbyIdControler {
      * @return List of the current schedules of one user
      */
     @GetMapping(value = {"/schedule/get-by-idUser/Current/{idUser}"})
-    public List<Schedule> getAllUserCurrent(@PathVariable Integer idUser){
+    public ResponseEntity<List<Schedule>> getAllUserCurrent(@PathVariable Integer idUser){
         List <Schedule> schedules = scheduleService.getAllbyIdUser(idUser);
         
         List<List <Schedule>> schedulesupdate = scheduleService.ispast(schedules);
@@ -104,7 +122,13 @@ public class GetbyIdControler {
         scheduleService.updateandremoveAll(schedulesupdate.get(1), done);
         SessionStatus current = statusService.findByIdStatus(statecurrent);
 
-        return statusService.getAllbystatus(current,schedules);
+        List<Schedule> response = statusService.getAllbystatus(current,schedules);
+
+        if(response.isEmpty()){
+            return new ResponseEntity(response,HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity(response,HttpStatus.OK);
     }
 
 
@@ -114,9 +138,17 @@ public class GetbyIdControler {
      * @return Json with all the info of the schedule
      */
     @GetMapping( value = { "/schedule/get-by-idSchedule/{idSchedule}" } )
-    public Schedule getbyIdSchedule(  @PathVariable Integer idSchedule){
+    public ResponseEntity<Schedule> getbyIdSchedule(  @PathVariable Integer idSchedule){
 
-        return scheduleService.getbyid(idSchedule);
+        Schedule schedule= scheduleService.getbyid(idSchedule);
+
+        if(schedule.equals(null)){
+            return new ResponseEntity(schedule,HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity(schedule,HttpStatus.OK);
     }
+  
+    
 
 }

@@ -85,10 +85,6 @@ paths:
           description: Not Found
           schema:
             $ref: '#/definitions/ErrorModel'
-        '406':
-            description: Not Acceptable (Invalid Params)
-            schema:
-              $ref: '#/definitions/ErrorModel'
         '500':
           description: unexpected error
           schema:
@@ -113,10 +109,6 @@ paths:
           description: Not Found
           schema:
             $ref: '#/definitions/ErrorModel'
-        '406':
-            description: Not Acceptable (Invalid Params)
-            schema:
-              $ref: '#/definitions/ErrorModel'
         '500':
           description: unexpected error
           schema:
@@ -141,10 +133,6 @@ paths:
           description: Not Found
           schema:
             $ref: '#/definitions/ErrorModel'
-        '406':
-            description: Not Acceptable (Invalid Params)
-            schema:
-              $ref: '#/definitions/ErrorModel'
         '500':
           description: unexpected error
           schema:
@@ -168,10 +156,6 @@ paths:
           description: Not Found
           schema:
             $ref: '#/definitions/ErrorModel'
-        '406':
-            description: Not Acceptable (Invalid Params)
-            schema:
-              $ref: '#/definitions/ErrorModel'
         '500':
           description: unexpected error
           schema:
