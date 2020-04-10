@@ -98,18 +98,20 @@ public class ScheduleService {
         return correctness;
     }
     
-    public boolean isPosibleCancell(Schedule schedule, Integer posibleTime){
+    public boolean isPosible(Schedule schedule, Integer posibleTime){
         LocalDate today = LocalDate.now();
         LocalTime time = LocalTime.now();
 
-        boolean correctness = false ;
-        if(schedule.getDaySession().isBefore(today)){
-            correctness = true;
+        boolean correctness = true ;
+
+        if(schedule.getDaySession().isAfter(today)){
+            correctness = false;
+
         }
         else if(schedule.getDaySession().isEqual(today)){
-            LocalTime timeCancel = schedule.getIniTime().plusMinutes(posibleTime);
-            if(timeCancel.isBefore(time)){
-                correctness = true;
+            LocalTime timeCancel = time.plusMinutes(posibleTime);
+            if(timeCancel.isAfter(schedule.getIniTime())){
+                correctness = false;
             }
         }
         return correctness;
