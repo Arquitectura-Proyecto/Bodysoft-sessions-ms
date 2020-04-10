@@ -7,7 +7,7 @@ info:
   description: Java Srpring boot + MySQL 
   license:
     name: Software Architecture, 2020-I
-host: localhost:4000 
+host: host:4000 
 basePath: /schedule
 schemes:
   - http
