@@ -104,7 +104,7 @@ public class ScheduleService {
 
         boolean correctness = true ;
 
-        if(schedule.getDaySession().isAfter(today)){
+        if(schedule.getDaySession().isBefore(today)){
             correctness = false;
 
         }
