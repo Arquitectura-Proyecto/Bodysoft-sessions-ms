@@ -32,7 +32,7 @@ services:
       spring.flyway.user: admin
       spring.flyway.password: bs_sessions_2020i
     ports:
-      - "4000:4000"
+      - "4002:4000"
     links:
       - session-bs
     networks:
