@@ -45,7 +45,7 @@ paths:
       summary: Deletes an schedule 
       operationId: deleteSchedule
       parameters:
-        - name: user
+        - name: ChageState
           in: body
           required: true
           description: ChangeStatePOJO Object
@@ -167,7 +167,7 @@ paths:
       summary: Set a schedule
       operationId: setAdate
       parameters:
-        - name: user
+        - name: ChageState
           in: body
           required: true
           description: ChangeStatePOJO Object
@@ -198,7 +198,7 @@ paths:
       summary: Cancel a schedule by a User
       operationId: calcelUser
       parameters:
-        - name: user
+        - name: ChageState
           in: body
           required: true
           description: ChangeStatePOJO Object
@@ -229,7 +229,7 @@ paths:
       summary: Cancel a schedule by a coach
       operationId: calcelCoach
       parameters:
-        - name: user
+        - name: ChageState
           in: body
           required: true
           description: ChangeStatePOJO Object
