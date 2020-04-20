@@ -52,14 +52,18 @@ paths:
           schema:
             $ref: '#/definitions/ChageState'
       responses:
-        '200':
-          description: Ok
-        '404':
-          description: Not Found
+        '204':
+          description: No Content
+        '409':
+          description: Conflict
           schema:
             $ref: '#/definitions/ErrorModel'
-        '406':
-            description: Not Acceptable (Invalid Params)
+        '400':
+            description: Bad request (Invalid Params)
+            schema:
+              $ref: '#/definitions/ErrorModel'
+        '403':
+            description: Forbidden (Invalid id) 
             schema:
               $ref: '#/definitions/ErrorModel'
         '500':
@@ -82,8 +86,8 @@ paths:
           description: Ok
           schema:
             $ref: '#/definitions/Schedule'
-        '404':
-          description: Not Found
+        '409':
+          description: Conflict
           schema:
             $ref: '#/definitions/ErrorModel'
         '500':
@@ -106,8 +110,31 @@ paths:
           description: Ok
           schema:
             $ref: '#/definitions/Schedule'
-        '404':
-          description: Not Found
+        '409':
+          description: Conflict
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  /get-by-idCoach/Avaible/{idCoach}:
+    get:
+      summary: Returns the list of avaible schedule of the coach with the given id
+      operationId: getAllCoachAvaiblee
+      parameters:
+        - name: idCoach
+          in: path
+          description: The id of the coach 
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/Schedule'
+        '409':
+          description: Conflict
           schema:
             $ref: '#/definitions/ErrorModel'
         '500':
@@ -130,8 +157,8 @@ paths:
           description: Ok
           schema:
             $ref: '#/definitions/Schedule'
-        '404':
-          description: Not Found
+        '409':
+          description: Conflict
           schema:
             $ref: '#/definitions/ErrorModel'
         '500':
@@ -153,8 +180,31 @@ paths:
           description: Ok
           schema:
             $ref: '#/definitions/Schedule'
-        '404':
-          description: Not Found
+        '409':
+          description: Conflict
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  /get-by-idSchedule/{idSchedule}:
+    get:
+      summary: Returns the schedule with the given id
+      operationId: getbyIdSchedule
+      parameters:
+        - name: idSchedule
+          in: path
+          description: The id of the schedule 
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/Schedule'
+        '409':
+          description: Conflict
           schema:
             $ref: '#/definitions/ErrorModel'
         '500':
@@ -174,18 +224,16 @@ paths:
           schema:
             $ref: '#/definitions/ChageState'
       responses:
-        '200':
-          description: Ok
-          schema:
-            $ref: '#/definitions/Schedule'
         '204':
           description: No Content
-        '404':
-          description: Not Found
+        '204':
+          description: No Content
+        '409':
+          description: Conflict
           schema:
             $ref: '#/definitions/ErrorModel'
-        '406':
-            description: Not Acceptable (Invalid Params)
+        '400':
+            description: Bad request (Invalid Params)
             schema:
               $ref: '#/definitions/ErrorModel'
         '500':
@@ -205,18 +253,18 @@ paths:
           schema:
             $ref: '#/definitions/ChageState'
       responses:
-        '200':
-          description: Ok
-          schema:
-            $ref: '#/definitions/Schedule'
         '204':
           description: No Content
         '404':
           description: Not Found
           schema:
             $ref: '#/definitions/ErrorModel'
-        '406':
-            description: Not Acceptable (Invalid Params)
+        '400':
+            description: Bad request (Invalid Params)
+            schema:
+              $ref: '#/definitions/ErrorModel'
+        '403':
+            description: Forbidden (Invalid id)
             schema:
               $ref: '#/definitions/ErrorModel'
         '500':
@@ -236,18 +284,18 @@ paths:
           schema:
             $ref: '#/definitions/ChageState'
       responses:
-        '200':
-          description: Ok
-          schema:
-            $ref: '#/definitions/Schedule'
         '204':
           description: No Content
-        '404':
-          description: Not Found
+        '409':
+          description: Conflict
           schema:
             $ref: '#/definitions/ErrorModel'
-        '406':
-            description: Not Acceptable (Invalid Params)
+        '400':
+            description: Bad request (Invalid Params) BAD_REQUEST
+            schema:
+              $ref: '#/definitions/ErrorModel'
+        '403':
+            description: Forbidden (Invalid id) 
             schema:
               $ref: '#/definitions/ErrorModel'
         '500':

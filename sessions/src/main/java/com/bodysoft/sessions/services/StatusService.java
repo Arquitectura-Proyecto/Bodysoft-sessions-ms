@@ -38,4 +38,9 @@ public class StatusService {
         }
         return statusList;
     }
+
+    public boolean isrightState (SessionStatus status, Integer rigthStatus){
+        boolean correct = status.getId()==rigthStatus;
+        return correct;
+    }
 }

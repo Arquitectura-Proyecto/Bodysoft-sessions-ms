@@ -1,4 +1,43 @@
 
+query{
+		getbyIdSchedules(User:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiVHlwZUlEIjoxLCJleHAiOjE1ODczMzQ1NTN9.MqLpdlMnUMhequdysqAlkd1rRHWZyOYGIrIqoQlesr8"
+				schedule:40
+    ){
+    id_schedule
+    idCoach
+    daySession
+    iniTime
+    endTime
+    status{
+        id
+    		nameStatus
+    }
+    idUser
+  }
+}
+
+
+token coach ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiVHlwZUlEIjoxLCJleHAiOjE1ODczMzQzMzJ9.v3hKp8H8KYMgjqqf70-8MfyyhQSqLS8ekgbMrOuP4ac"
+
+
+mutation{
+		registerSchedules(schedule:{
+      token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiVHlwZUlEIjoxLCJleHAiOjE1ODczMjU0Mjh9.AdiH72m4ggKUzbxREnI1V3s3BiraQnYaapCfcT6EVMs"
+   		daySession: "2020-04-20"
+    	iniTime: "14:00:00"
+    	endTime: "17:00:00"
+    })
+}
+
+
+
+mutation{
+		CancelADate(ChangeStatus:{
+      token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiVHlwZUlEIjoxLCJleHAiOjE1ODczMjU0Mjh9.AdiH72m4ggKUzbxREnI1V3s3BiraQnYaapCfcT6EVMs"
+      schedule: 45
+    })
+}
+
 
 
 localhost:4000/schedule/new-schedule/

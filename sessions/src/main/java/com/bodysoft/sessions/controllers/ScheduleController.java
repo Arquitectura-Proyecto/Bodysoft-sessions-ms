@@ -72,22 +72,22 @@ public class ScheduleController {
 
         boolean isrigthid = scheduleService.isRightId(pojo.getSchedule());
         if(!isrigthid){
-            return new ResponseEntity( HttpStatus.NOT_FOUND );
+            return new ResponseEntity( HttpStatus.CONFLICT );
         }
         Schedule schedule = scheduleService.getbyid(pojo.getSchedule());
 
         boolean isrigthCoach = scheduleService.isRightCoach(schedule, pojo.getPerson());
         if(!isrigthCoach){
-            return new ResponseEntity( HttpStatus.NOT_ACCEPTABLE );
+            return new ResponseEntity( HttpStatus.FORBIDDEN );
         }
         boolean isRightUser = scheduleService.isRightUser(schedule, 0);
         if(!isRightUser){
-            return new ResponseEntity( HttpStatus.NOT_ACCEPTABLE );
+            return new ResponseEntity( HttpStatus.CONFLICT );
         }
 
         scheduleService.delete(schedule);
 
-        return new ResponseEntity( HttpStatus.OK );
+        return new ResponseEntity( HttpStatus.NO_CONTENT );
 
     }
 
