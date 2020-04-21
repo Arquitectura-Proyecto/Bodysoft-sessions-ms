@@ -44,19 +44,19 @@ public class ChangeStatusControler {
     public ResponseEntity setAdate(@RequestBody ChangeStatePOJO pojo) {
         boolean isrigthid = scheduleService.isRightId(pojo.getSchedule());
         if (!isrigthid) {
-            return new ResponseEntity(HttpStatus.CONFLICT);
+            return new ResponseEntity("El horario no existe",HttpStatus.CONFLICT);
         }
         Schedule schedule = scheduleService.getbyid(pojo.getSchedule());
 
         boolean isrigthUser = scheduleService.isRightUser(schedule, this.defaultIduser);
         if (!isrigthUser) {
-            return new ResponseEntity(HttpStatus.CONFLICT);
+            return new ResponseEntity("El horario ya ha sido tomado",HttpStatus.CONFLICT);
         }
 
         boolean isPosible = scheduleService.isPosible(schedule, this.timetoSetup);
 
         if (!isPosible) {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("Se ha superado el tiempo minimo antes del inicio de la sesion",HttpStatus.BAD_REQUEST);
         }
 
         SessionStatus status = statusService.findByIdStatus(this.statecurrent);
@@ -78,24 +78,24 @@ public class ChangeStatusControler {
     public ResponseEntity calcelUser(@RequestBody ChangeStatePOJO pojo) {
         boolean isrigthid = scheduleService.isRightId(pojo.getSchedule());
         if (!isrigthid) {
-            return new ResponseEntity(HttpStatus.CONFLICT);
+            return new ResponseEntity("El horario no existe",HttpStatus.CONFLICT);
         }
         Schedule schedule = scheduleService.getbyid(pojo.getSchedule());
         boolean isrightstate = statusService.isrightState(schedule.getStatus(), this.statecurrent);
 
         if (!isrightstate) {
-            return new ResponseEntity(HttpStatus.CONFLICT);
+            return new ResponseEntity("El horario no esta tomado",HttpStatus.CONFLICT);
         }
 
         boolean isrigthUser = scheduleService.isRightUser(schedule, pojo.getPerson());
         if (!isrigthUser) {
-            return new ResponseEntity(HttpStatus.FORBIDDEN);
+            return new ResponseEntity("No esta autorizado para hacer esta peticion",HttpStatus.FORBIDDEN);
         }
 
         boolean isPosible = scheduleService.isPosible(schedule, this.timetocancel);
 
         if (!isPosible) {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("Tiempo minimo para cancelar antes del inicio de la sesion superado",HttpStatus.BAD_REQUEST);
         }
 
         SessionStatus status = statusService.findByIdStatus(this.stateavaible);
@@ -119,24 +119,24 @@ public class ChangeStatusControler {
         boolean isrigthid = scheduleService.isRightId(pojo.getSchedule());
 
         if (!isrigthid) {
-            return new ResponseEntity(HttpStatus.CONFLICT);
+            return new ResponseEntity("El horario no existe",HttpStatus.CONFLICT);
         }
         Schedule schedule = scheduleService.getbyid(pojo.getSchedule());
 
         boolean isrightstate = statusService.isrightState(schedule.getStatus(), this.statecurrent);
 
         if (!isrightstate) {
-            return new ResponseEntity(HttpStatus.CONFLICT);
+            return new ResponseEntity("El horario no esta tomado",HttpStatus.CONFLICT);
         }
         boolean isrigthCoach = scheduleService.isRightCoach(schedule, pojo.getPerson());
         if (!isrigthCoach) {
-            return new ResponseEntity(HttpStatus.FORBIDDEN);
+            return new ResponseEntity("No esta autorizado para hacer esta peticion",HttpStatus.FORBIDDEN);
         }
 
         boolean isPosible = scheduleService.isPosible(schedule, this.timetocancel);
 
         if (!isPosible) {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("Tiempo minimo para cancelar antes del inicio de la sesion superado",HttpStatus.BAD_REQUEST);
         }
 
         SessionStatus status = statusService.findByIdStatus(this.statecancelled);

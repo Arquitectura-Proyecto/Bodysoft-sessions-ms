@@ -42,7 +42,7 @@ public class ScheduleController {
        
         if(!scheduleService.IsTimeCorrect(schedulePOJO) || !scheduleService.isDateAvailable(schedulePOJO) || !scheduleService.isRightSchedule(schedulePOJO)){
             
-            return new ResponseEntity( HttpStatus.BAD_REQUEST );
+            return new ResponseEntity("Campos con valores no validos", HttpStatus.BAD_REQUEST );
         }
 
         SessionStatus status = statusService.findByIdStatus(defaultIdstatus);
@@ -59,8 +59,7 @@ public class ScheduleController {
 
         
         scheduleService.save( newSchedule);
-        
-        return new ResponseEntity( HttpStatus.CREATED );
+        return new ResponseEntity( newSchedule, HttpStatus.CREATED );
     }
      /**
      * 
@@ -72,17 +71,17 @@ public class ScheduleController {
 
         boolean isrigthid = scheduleService.isRightId(pojo.getSchedule());
         if(!isrigthid){
-            return new ResponseEntity( HttpStatus.CONFLICT );
+            return new ResponseEntity("El horario no existe", HttpStatus.CONFLICT );
         }
         Schedule schedule = scheduleService.getbyid(pojo.getSchedule());
 
         boolean isrigthCoach = scheduleService.isRightCoach(schedule, pojo.getPerson());
         if(!isrigthCoach){
-            return new ResponseEntity( HttpStatus.FORBIDDEN );
+            return new ResponseEntity("Usuario no autorizado", HttpStatus.FORBIDDEN );
         }
         boolean isRightUser = scheduleService.isRightUser(schedule, 0);
         if(!isRightUser){
-            return new ResponseEntity( HttpStatus.CONFLICT );
+            return new ResponseEntity("El horario ya esta ocupado", HttpStatus.CONFLICT );
         }
 
         scheduleService.delete(schedule);
@@ -94,7 +93,7 @@ public class ScheduleController {
     /** QUITAR */
     @RequestMapping("/")
     public String home() {
-        return "Hello Spring Boot with Docker";
+        return "Session microservice running";
     }
 
 }

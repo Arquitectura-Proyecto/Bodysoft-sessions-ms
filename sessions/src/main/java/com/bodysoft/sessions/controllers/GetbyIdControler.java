@@ -39,7 +39,7 @@ public class GetbyIdControler {
      * @return List of all the schedule of one coach
      */
     @GetMapping( value = { "/schedule/get-by-idCoach/{idCoach}" } )
-    public ResponseEntity<List<Schedule>> getAllbyIdCoach(  @PathVariable Integer idCoach){
+    public ResponseEntity getAllbyIdCoach(  @PathVariable Integer idCoach){
         List <Schedule> schedules = scheduleService.getAllbyIdCoach(idCoach);
         
         List<List <Schedule>> schedulesupdate = scheduleService.ispast(schedules);
@@ -48,7 +48,7 @@ public class GetbyIdControler {
 
         List<Schedule> response = scheduleService.getAllbyIdCoach(idCoach);
         if(response.isEmpty()){
-            return new ResponseEntity(response,HttpStatus.CONFLICT);
+            return new ResponseEntity("No hay horarios por el id solicitado",HttpStatus.CONFLICT);
         }
 
         return new ResponseEntity(response,HttpStatus.OK);
@@ -61,7 +61,7 @@ public class GetbyIdControler {
      * @return List of the current schedules of one coach
      */
     @GetMapping(value = {"/schedule/get-by-idCoach/Current/{idCoach}"})
-    public ResponseEntity<List<Schedule>> getAllCoachCurrent(@PathVariable Integer idCoach){
+    public ResponseEntity getAllCoachCurrent(@PathVariable Integer idCoach){
         List <Schedule> schedules = scheduleService.getAllbyIdCoach(idCoach);
         
         List<List <Schedule>> schedulesupdate = scheduleService.ispast(schedules);
@@ -78,7 +78,7 @@ public class GetbyIdControler {
         union.addAll(statusService.getAllbystatus(current,sList));
 
         if(union.isEmpty()){
-            return new ResponseEntity(union,HttpStatus.CONFLICT);
+            return new ResponseEntity("No hay horarios por el id solicitado",HttpStatus.CONFLICT);
         }
 
         return new ResponseEntity(union,HttpStatus.OK);
@@ -91,7 +91,7 @@ public class GetbyIdControler {
      * @return List of the avaible schedules of one coach
      */
     @GetMapping(value = {"/schedule/get-by-idCoach/Avaible/{idCoach}"})
-    public ResponseEntity<List<Schedule>> getAllCoachAvaible(@PathVariable Integer idCoach){
+    public ResponseEntity getAllCoachAvaible(@PathVariable Integer idCoach){
         List <Schedule> schedules = scheduleService.getAllbyIdCoach(idCoach);
         
         List<List <Schedule>> schedulesupdate = scheduleService.ispast(schedules);
@@ -104,7 +104,7 @@ public class GetbyIdControler {
         List<Schedule> union = statusService.getAllbystatus(avaible,sList);
 
         if(union.isEmpty()){
-            return new ResponseEntity(union,HttpStatus.CONFLICT);
+            return new ResponseEntity("No hay horarios por el id solicitado",HttpStatus.CONFLICT);
         }
 
         return new ResponseEntity(union,HttpStatus.OK);
@@ -116,7 +116,7 @@ public class GetbyIdControler {
      * @return List of all the schedule of one user
      */
     @GetMapping( value = { "/schedule/get-by-idUser/{idUser}" } )
-    public ResponseEntity<List<Schedule>> getAllbyIdUser(  @PathVariable Integer idUser){
+    public ResponseEntity getAllbyIdUser(  @PathVariable Integer idUser){
         List <Schedule> schedules = scheduleService.getAllbyIdUser(idUser);
         
         List<List <Schedule>> schedulesupdate = scheduleService.ispast(schedules);
@@ -126,7 +126,7 @@ public class GetbyIdControler {
         List<Schedule> response = scheduleService.getAllbyIdUser(idUser);
 
         if(response.isEmpty()){
-            return new ResponseEntity(response,HttpStatus.CONFLICT);
+            return new ResponseEntity("No hay horarios por el id solicitado",HttpStatus.CONFLICT);
         }
 
         return new ResponseEntity(response,HttpStatus.OK);
@@ -139,7 +139,7 @@ public class GetbyIdControler {
      * @return List of the current schedules of one user
      */
     @GetMapping(value = {"/schedule/get-by-idUser/Current/{idUser}"})
-    public ResponseEntity<List<Schedule>> getAllUserCurrent(@PathVariable Integer idUser){
+    public ResponseEntity getAllUserCurrent(@PathVariable Integer idUser){
         List <Schedule> schedules = scheduleService.getAllbyIdUser(idUser);
         
         List<List <Schedule>> schedulesupdate = scheduleService.ispast(schedules);
@@ -150,7 +150,7 @@ public class GetbyIdControler {
         List<Schedule> response = statusService.getAllbystatus(current,schedules);
 
         if(response.isEmpty()){
-            return new ResponseEntity(response,HttpStatus.CONFLICT);
+            return new ResponseEntity("No hay horarios por el id solicitado",HttpStatus.CONFLICT);
         }
 
         return new ResponseEntity(response,HttpStatus.OK);
@@ -163,10 +163,10 @@ public class GetbyIdControler {
      * @return Json with all the info of the schedule
      */
     @GetMapping( value = { "/schedule/get-by-idSchedule/{idSchedule}" } )
-    public ResponseEntity<Schedule> getbyIdSchedule(  @PathVariable Integer idSchedule){
+    public ResponseEntity getbyIdSchedule(  @PathVariable Integer idSchedule){
 
         if(!scheduleService.isRightId(idSchedule)){
-            return new ResponseEntity(null,HttpStatus.CONFLICT);
+            return new ResponseEntity("El horario no exite",HttpStatus.CONFLICT);
         } 
         else{
             Schedule schedule= scheduleService.getbyid(idSchedule);

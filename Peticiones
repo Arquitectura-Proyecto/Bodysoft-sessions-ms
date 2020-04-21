@@ -19,6 +19,12 @@ query{
 
 token coach ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiVHlwZUlEIjoxLCJleHAiOjE1ODczMzQzMzJ9.v3hKp8H8KYMgjqqf70-8MfyyhQSqLS8ekgbMrOuP4ac"
 
+mutation{
+  CancelADate(ChangeStatus:{
+    token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiVHlwZUlEIjoxLCJleHAiOjE1ODczMzQ1NTN9.MqLpdlMnUMhequdysqAlkd1rRHWZyOYGIrIqoQlesr8"
+    schedule: 46
+  })
+}
 
 mutation{
 		registerSchedules(schedule:{
