@@ -1,7 +1,7 @@
 version: '2.1'
 services:
-  session-bs: # Entrada para definir el contenedor. Por defecto este nombre se usa como hostname
-    container_name: session-bs
+  bodySoft-session-bs: # Entrada para definir el contenedor. Por defecto este nombre se usa como hostname
+    container_name: bodySoft-session-bs
     image: mysql:5.7
     environment: # Definición de variables de entorn
       MYSQL_DATABASE: bs_sessions
@@ -18,27 +18,27 @@ services:
     networks:
       - example-network
 
-  session-ms:
-    container_name: session-ms
+  bodySoft-session-ms:
+    container_name: bodySoft-session-ms
     build:
       context: .
       dockerfile: Dockerfile
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://session-bs:3306/bs_sessions?autoReconnect=true&useSSL=false
+      SPRING_DATASOURCE_URL: jdbc:mysql://bodySoft-session-bs:3306/bs_sessions?autoReconnect=true&useSSL=false
       SPRING_DATASOURCE_USERNAME: admin
       SPRING_DATASOURCE_PASSWORD: bs_sessions_2020i
-      spring.flyway.url: jdbc:mysql://session-bs:3306/
+      spring.flyway.url: jdbc:mysql://bodySoft-session-bs:3306/
       spring.flyway.schemas: bs_sessions
       spring.flyway.user: admin
       spring.flyway.password: bs_sessions_2020i
     ports:
       - "4002:4000"
     links:
-      - session-bs
+      - bodySoft-session-bs
     networks:
       - example-network
     depends_on:
-        session-bs:
+        bodySoft-session-bs:
             condition: service_healthy
 
 networks:
