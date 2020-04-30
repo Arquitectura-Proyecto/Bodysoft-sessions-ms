@@ -1,3 +1,11 @@
+sessionFragment
+
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/login">
+
 
 query{
 		getbyIdSchedules(User:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6MSwiVHlwZUlEIjoxLCJleHAiOjE1ODczMzQ1NTN9.MqLpdlMnUMhequdysqAlkd1rRHWZyOYGIrIqoQlesr8"
