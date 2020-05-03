@@ -149,11 +149,11 @@ public class GetbyIdControler {
         SessionStatus current = statusService.findByIdStatus(statecurrent);
 
         List<Schedule> response = statusService.getAllbystatus(current,schedules);
-
+/*
         if(response.isEmpty()){
             return new ResponseEntity("No hay horarios por el id solicitado",HttpStatus.CONFLICT);
         }
-
+*/
         return new ResponseEntity(response,HttpStatus.OK);
     }
 
@@ -167,7 +167,7 @@ public class GetbyIdControler {
     public ResponseEntity getbyIdSchedule(  @PathVariable Integer idSchedule){
        
         if(!scheduleService.isRightId(idSchedule)){
-            return new ResponseEntity(new ArrayList(),HttpStatus.OK);
+            return new ResponseEntity(null,HttpStatus.OK);
         } 
         else{
             Schedule schedule= scheduleService.getbyid(idSchedule);
