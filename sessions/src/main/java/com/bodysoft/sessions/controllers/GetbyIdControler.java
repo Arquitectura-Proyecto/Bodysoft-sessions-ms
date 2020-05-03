@@ -47,9 +47,10 @@ public class GetbyIdControler {
         scheduleService.updateandremoveAll(schedulesupdate.get(1), done);
 
         List<Schedule> response = scheduleService.getAllbyIdCoach(idCoach);
+        /*
         if(response.isEmpty()){
             return new ResponseEntity("No hay horarios por el id solicitado",HttpStatus.CONFLICT);
-        }
+        }*/
 
         return new ResponseEntity(response,HttpStatus.OK);
         
@@ -76,10 +77,10 @@ public class GetbyIdControler {
 
         union.addAll(statusService.getAllbystatus(avaible,sList));
         union.addAll(statusService.getAllbystatus(current,sList));
-
+        /*
         if(union.isEmpty()){
             return new ResponseEntity("No hay horarios por el id solicitado",HttpStatus.CONFLICT);
-        }
+        }*/
 
         return new ResponseEntity(union,HttpStatus.OK);
 
@@ -102,11 +103,11 @@ public class GetbyIdControler {
 
         List<Schedule> sList = scheduleService.getAllbyIdCoach(idCoach);
         List<Schedule> union = statusService.getAllbystatus(avaible,sList);
-
+/*
         if(union.isEmpty()){
             return new ResponseEntity("No hay horarios por el id solicitado",HttpStatus.CONFLICT);
         }
-
+*/
         return new ResponseEntity(union,HttpStatus.OK);
 
     }
@@ -124,11 +125,11 @@ public class GetbyIdControler {
         scheduleService.updateandremoveAll(schedulesupdate.get(1), done);
 
         List<Schedule> response = scheduleService.getAllbyIdUser(idUser);
-
+/*
         if(response.isEmpty()){
             return new ResponseEntity("No hay horarios por el id solicitado",HttpStatus.CONFLICT);
         }
-
+*/
         return new ResponseEntity(response,HttpStatus.OK);
 
     }
@@ -164,9 +165,9 @@ public class GetbyIdControler {
      */
     @GetMapping( value = { "/schedule/get-by-idSchedule/{idSchedule}" } )
     public ResponseEntity getbyIdSchedule(  @PathVariable Integer idSchedule){
-
+       
         if(!scheduleService.isRightId(idSchedule)){
-            return new ResponseEntity("El horario no exite",HttpStatus.CONFLICT);
+            return new ResponseEntity(new ArrayList(),HttpStatus.OK);
         } 
         else{
             Schedule schedule= scheduleService.getbyid(idSchedule);
